@@ -1,4 +1,4 @@
-package gov.superswag.superduperbreakout.game_objects;
+package gov.superswag.superduperbreakout.gameobjects;
 
 import gov.superswag.superduperbreakout.util.Vector2;
 

@@ -4,24 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a9fcb21b-fba3-42f8-b2f4-3a73eaeeee51" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/game_objects/Ball.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/game_objects/Paddle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/gov/superswag/superduperbreakout/hello-view.fxml" afterDir="false" />
+    <list default="true" id="a9fcb21b-fba3-42f8-b2f4-3a73eaeeee51" name="Changes" comment="Created the Universe">
+      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/controller/InputHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Paddle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/MathHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/game_objects/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/game_objects/Paddle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,5 +96,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Created the Universe" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the Universe" />
   </component>
 </project>

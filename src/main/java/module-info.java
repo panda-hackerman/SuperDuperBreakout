@@ -4,9 +4,11 @@ module gov.superswag.superduperbreakout {
 
   opens gov.superswag.superduperbreakout to javafx.fxml;
   exports gov.superswag.superduperbreakout;
-  exports gov.superswag.superduperbreakout.game_objects;
-  opens gov.superswag.superduperbreakout.game_objects to javafx.fxml;
+  exports gov.superswag.superduperbreakout.gameobjects;
+  opens gov.superswag.superduperbreakout.gameobjects to javafx.fxml;
   exports gov.superswag.superduperbreakout.util;
   opens gov.superswag.superduperbreakout.util to javafx.fxml;
+  exports gov.superswag.superduperbreakout.controller;
+  opens gov.superswag.superduperbreakout.controller to javafx.fxml;
 
 }

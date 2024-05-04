@@ -1,7 +1,8 @@
 package gov.superswag.superduperbreakout.util;
 
 /**
- * Represents a 2-dimensional vector using two double (floating-point) numbers.
+ * Immutable 2D Vector implementation. Represents a 2-dimensional vector using two double
+ * (floating-point) numbers.
  *
  * @author Eli Michaud
  * @since 2024/04/26

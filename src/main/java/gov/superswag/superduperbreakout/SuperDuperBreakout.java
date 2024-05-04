@@ -1,14 +1,13 @@
 package gov.superswag.superduperbreakout;
 
-import gov.superswag.superduperbreakout.game_objects.Paddle;
+import gov.superswag.superduperbreakout.controller.InputHandler;
+import gov.superswag.superduperbreakout.gameobjects.Paddle;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 public class SuperDuperBreakout extends Application {
@@ -30,7 +29,8 @@ public class SuperDuperBreakout extends Application {
     primaryStage.setResizable(false);
     primaryStage.show();
 
-    paddle.getRect().requestFocus();
+    mainGameplayScene.setOnKeyPressed(InputHandler::keyPressed);
+    mainGameplayScene.setOnKeyReleased(InputHandler::keyReleased);
   }
 
   private Scene buildGameplayScene() {
@@ -39,12 +39,10 @@ public class SuperDuperBreakout extends Application {
     pane.setBackground(Background.fill(Color.BLACK));
 
     double paddleX = (GAMEPLAY_WINDOW_WIDTH / 2f) - (Paddle.PADDLE_WIDTH / 2f);
-    double paddleY = GAMEPLAY_WINDOW_HEIGHT - 75;
+    double paddleY = GAMEPLAY_WINDOW_HEIGHT - Paddle.PADDLE_Y;
 
     paddle = new Paddle(paddleX, paddleY);
-    Shape paddleRect = paddle.getRect();
-
-    pane.getChildren().add(paddleRect);
+    pane.getChildren().add(paddle.getRect());
 
     return new Scene(pane, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
   }
