@@ -6,6 +6,9 @@ import java.util.List;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Manages everything about keyboard input and movement.
+ */
 public class InputHandler {
 
   private static final ArrayList<KeyCode> pressedInput = new ArrayList<>();
@@ -54,5 +57,12 @@ public class InputHandler {
 
   }
 
-  public enum InputDirection { NONE, LEFT, RIGHT, BOTH }
+  /** Represents which of the movement keys are being pressed. */
+  public enum InputDirection {
+    NONE,
+    LEFT,
+    RIGHT,
+    /** In the case where opposite directions are being pressed at the same time */
+    BOTH
+  }
 }

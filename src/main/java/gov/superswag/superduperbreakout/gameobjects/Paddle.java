@@ -1,49 +1,46 @@
 package gov.superswag.superduperbreakout.gameobjects;
 
-import static javafx.scene.input.KeyCode.*;
-
 import gov.superswag.superduperbreakout.SuperDuperBreakout;
 import gov.superswag.superduperbreakout.controller.InputHandler;
 import gov.superswag.superduperbreakout.controller.InputHandler.InputDirection;
 import gov.superswag.superduperbreakout.util.MathHelper;
 import gov.superswag.superduperbreakout.util.Vector2;
-import java.util.List;
 import javafx.animation.AnimationTimer;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+/** The main paddle (player) */
 public class Paddle {
 
-  /** Speed in pixels per second */
+  /** (In pixels per second) */
   public static final double SPEED = 200;
 
   public static final int PADDLE_WIDTH = 75;
-  public static final int PADDLE_HEIGHT = 20;
+  public static final int PADDLE_HEIGHT = 10;
   /** The paddle's distance from the bottom */
   public static final int PADDLE_Y = 75;
 
   final double minX = 0;
   final double maxX = SuperDuperBreakout.GAMEPLAY_WINDOW_WIDTH - PADDLE_WIDTH;
 
-  private final Rectangle rect;
+  Vector2 position;
 
-  private Vector2 position;
-  private double velocity = 0;
+  private final Rectangle rect;
   private long lastUpdateTime = 0;
 
   public Paddle(double x, double y) {
 
-    position = new Vector2(x, y);
     rect = new Rectangle(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
     rect.setFill(Color.WHITE);
 
+    position = new Vector2(x, y);
+
+    //Start the update loop
     AnimationTimer animationTimer = new AnimationTimer() {
       @Override
       public void handle(long currentTime) {
-        handleAnimation(currentTime);
+        onAnimUpdate(currentTime);
       }
     };
     animationTimer.start();
@@ -53,26 +50,34 @@ public class Paddle {
     return rect;
   }
 
-  public void handleAnimation(long now) {
+  public void onAnimUpdate(long now) {
 
-    //What keys are being pressed?
-    velocity = switch (InputHandler.getInputDirection()) {
-      case LEFT -> -SPEED;
-      case RIGHT -> SPEED;
-      case NONE, BOTH -> 0.0;
-    };
-
-    //Calculate movement
-    if (lastUpdateTime > 0) {
-      double elapsedSeconds = MathHelper.nanoToSeconds(now - lastUpdateTime);
-      double deltaX = elapsedSeconds * velocity; //How much we should move
-      move(deltaX);
+    if (lastUpdateTime == 0) {
+      lastUpdateTime = now;
+      return; //Ignore first frame
     }
+
+    double elapsedSeconds = MathHelper.nanoToSeconds(now - lastUpdateTime); //deltaTime
+    double movementAmount = elapsedSeconds * getVelocity(); //deltaX
+    moveHorizontal(movementAmount);
 
     lastUpdateTime = now;
   }
 
-  public void move(double moveX) {
+  /**
+   * Get velocity based on the input direction.
+   * @see InputHandler
+   */
+  public double getVelocity() {
+    InputDirection input = InputHandler.getInputDirection();
+    return switch (input) {
+      case LEFT -> -SPEED;
+      case RIGHT -> SPEED;
+      case NONE, BOTH -> 0.0;
+    };
+  }
+
+  public void moveHorizontal(double moveX) {
 
     //Add movement to current position, and clamp to bounds.
     double newX = MathHelper.clamp(position.x() + moveX, minX, maxX);

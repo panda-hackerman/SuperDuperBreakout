@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9fcb21b-fba3-42f8-b2f4-3a73eaeeee51" name="Changes" comment="Created the Universe">
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/controller/InputHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Paddle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/MathHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/game_objects/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Ball.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/game_objects/Paddle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/controller/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/controller/InputHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Paddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/MathHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/MathHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +27,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -49,18 +49,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.SuperDuperBreakout.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.SuperDuperBreakout.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="SuperDuperBreakout" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="gov.superswag.superduperbreakout.SuperDuperBreakout" />
