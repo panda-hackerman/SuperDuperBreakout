@@ -12,8 +12,10 @@ public class CollisionInformation {
   /** What side of the hitbox was collided with */
   CollisionSide collisionSide;
 
-  public static void calculateCollisionSide() {
-    //TODO: Stuff here
+  public void calculateCollisionSide() {
+
+    //TODO: The answer is in the dot product, Luke!
+
   }
 
   public enum CollisionSide {

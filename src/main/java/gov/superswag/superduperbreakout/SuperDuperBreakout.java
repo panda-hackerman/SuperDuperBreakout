@@ -17,6 +17,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SuperDuperBreakout extends Application {
@@ -29,9 +32,11 @@ public class SuperDuperBreakout extends Application {
   Pane mainPane;
   Stage mainStage;
   Scene mainGameplayScene, startScene;
+
   public Paddle paddle;
   public Ball ball;
   public Bricks bricks;
+  public Text scoreText;
 
   private int score;
   private Leaderboard leaderboard;
@@ -51,6 +56,7 @@ public class SuperDuperBreakout extends Application {
   }
 
   private Scene buildStartScene() {
+
     VBox root = new VBox(10);
     root.setAlignment(Pos.CENTER);
     root.setStyle("-fx-padding: 20; -fx-background-color: black;");
@@ -58,21 +64,17 @@ public class SuperDuperBreakout extends Application {
     TextField nameInput = new TextField();
     nameInput.setPromptText("Enter your name");
     Button playButton = new Button("Play");
+
     playButton.setOnAction(e -> {
       String playerName = nameInput.getText().trim();
       if (!playerName.isEmpty()) {
         try {
           mainGameplayScene = buildGameplayScene();
-          if (mainGameplayScene != null) {
-            mainStage.setScene(mainGameplayScene);
-            mainGameplayScene.setOnKeyPressed(InputHandler::onKeyPressed);
-            mainGameplayScene.setOnKeyReleased(InputHandler::onKeyReleased);
-          } else {
-            System.out.println("Gameplay scene is not initialized.");
-          }
+          mainStage.setScene(mainGameplayScene);
+          mainGameplayScene.setOnKeyPressed(InputHandler::onKeyPressed);
+          mainGameplayScene.setOnKeyReleased(InputHandler::onKeyReleased);
         } catch (Exception ex) {
           System.out.println("Failed to initialize gameplay scene: " + ex.getMessage());
-          ex.printStackTrace();
         }
       } else {
         nameInput.setPromptText("Please enter a name!");
@@ -84,8 +86,14 @@ public class SuperDuperBreakout extends Application {
   }
 
   private Scene buildGameplayScene() {
+
     mainPane = new Pane();
     mainPane.setBackground(Background.fill(Color.BLACK));
+
+    scoreText = new Text(10, 30, "Score: 0");
+    scoreText.setFont(Font.font("Consolas", FontWeight.NORMAL, 24));
+    scoreText.setFill(Color.WHITE);
+    mainPane.getChildren().add(scoreText);
 
     //Bricks
     bricks = new Bricks();
@@ -115,10 +123,12 @@ public class SuperDuperBreakout extends Application {
     return new Scene(mainPane, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
   }
 
+  /** Every time the player scores a point */
   public void scorePoint() {
     score++;
-    System.out.println("Score: " + score);
-    leaderboard.addScore("PlayerName", score); // Adjust to use actual player name from input
+    scoreText.setText("Score: " + score);
+
+    //leaderboard.addScore("PlayerName", score); // Adjust to use actual player name from input
   }
 
   public static void main(String[] args) {
@@ -131,6 +141,7 @@ public class SuperDuperBreakout extends Application {
     paddle.stop();
     mainPane.getChildren().removeAll(ball.getCircle(), paddle.getRect());
     mainStage.close();
+
     Platform.runLater(() -> {
       try {
         new SuperDuperBreakout().start(new Stage());
@@ -138,5 +149,6 @@ public class SuperDuperBreakout extends Application {
         System.out.println("Couldn't reset scene: " + e.getMessage());
       }
     });
+
   }
 }

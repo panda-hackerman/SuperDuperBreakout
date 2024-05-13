@@ -22,6 +22,7 @@ public class Ball {
   private final AnimationTimer animationTimer;
   private final Circle circle;
 
+  private Vector2 lastFramePosition;
   private Vector2 position;
   private Vector2 direction = Vector2.fromAngle(Math.toRadians(45), SPEED);
 
@@ -34,6 +35,7 @@ public class Ball {
 
     circle = new Circle(x, y, RADIUS, Color.WHITE);
 
+    lastFramePosition = Vector2.ZERO;
     position = new Vector2(x, y);
 
     //Start the update loop
@@ -74,6 +76,7 @@ public class Ball {
     double x = position.x() + direction.x();
     double y = position.y() + direction.y();
 
+    lastFramePosition = position;
     position = new Vector2(
         MathHelper.clamp(x, minX, maxX),
         MathHelper.clamp(y, minY, maxY));
@@ -108,6 +111,7 @@ public class Ball {
     if (brickCollision != null) {
       brickCollision.onCollision();
       direction = new Vector2(direction.x(), direction.y() * -1); //Flip y
+      SuperDuperBreakout.instance.scorePoint();
       return;
     }
 
