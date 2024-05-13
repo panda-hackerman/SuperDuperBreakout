@@ -2,13 +2,17 @@ package gov.superswag.superduperbreakout;
 
 import gov.superswag.superduperbreakout.controller.InputHandler;
 import gov.superswag.superduperbreakout.gameobjects.Ball;
+import gov.superswag.superduperbreakout.gameobjects.Bricks;
 import gov.superswag.superduperbreakout.gameobjects.Paddle;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -23,8 +27,11 @@ public class SuperDuperBreakout extends Application {
   Stage mainStage;
   Scene mainGameplayScene;
 
-  Paddle paddle;
-  Ball ball;
+  public Paddle paddle;
+  public Ball ball;
+  public Bricks bricks;
+
+  private int score;
 
   @Override
   public void start(Stage primaryStage) throws IOException {
@@ -73,6 +80,17 @@ public class SuperDuperBreakout extends Application {
     mainPane = new Pane();
     mainPane.setBackground(Background.fill(Color.BLACK));
 
+    //Bricks
+    bricks = new Bricks();
+
+    StackPane stackPane = new StackPane();
+    stackPane.setPrefSize(GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT / 3);
+    stackPane.getChildren().add(bricks.getPane());
+
+    StackPane.setAlignment(bricks.getPane(), Pos.TOP_CENTER);
+
+    mainPane.getChildren().add(stackPane);
+
     //Paddle
     double paddleX = (GAMEPLAY_WINDOW_WIDTH / 2f) - (Paddle.PADDLE_WIDTH / 2f);
     double paddleY = GAMEPLAY_WINDOW_HEIGHT - Paddle.PADDLE_Y;
@@ -84,10 +102,15 @@ public class SuperDuperBreakout extends Application {
     double ballX = GAMEPLAY_WINDOW_WIDTH / 2f;
     double ballY = GAMEPLAY_WINDOW_HEIGHT / 2f;
 
-    ball = new Ball(ballX, ballY, paddle);
+    ball = new Ball(ballX, ballY);
     mainPane.getChildren().add(ball.getCircle());
 
     return new Scene(mainPane, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
+  }
+
+  public void scorePoint() {
+    score++;
+    System.out.println("Score: " + score);
   }
 
   public static void main(String[] args) {

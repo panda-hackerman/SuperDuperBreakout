@@ -1,6 +1,7 @@
 package gov.superswag.superduperbreakout.gameobjects;
 
 import gov.superswag.superduperbreakout.SuperDuperBreakout;
+import gov.superswag.superduperbreakout.gameobjects.Bricks.Brick;
 import gov.superswag.superduperbreakout.util.MathHelper;
 import gov.superswag.superduperbreakout.util.Vector2;
 import javafx.animation.AnimationTimer;
@@ -26,11 +27,10 @@ public class Ball {
 
   private long lastUpdateTime = 0;
 
-  Paddle paddle;
+  Paddle paddle = SuperDuperBreakout.instance.paddle;
+  Bricks bricks = SuperDuperBreakout.instance.bricks;
 
-  public Ball(double x, double y, Paddle paddle) {
-
-    this.paddle = paddle;
+  public Ball(double x, double y) {
 
     circle = new Circle(x, y, RADIUS, Color.WHITE);
 
@@ -85,18 +85,29 @@ public class Ball {
 
   private void checkCollision() {
 
-    //If it hit the wall
+    //If it hit the side wall
     if (position.x() == minX || position.x() == maxX) { //L and R
       direction = new Vector2(direction.x() * -1, direction.y()); //Flip x
     }
 
-    if (position.y() == minY) { // Top wall
+    //Top Wall
+    if (position.y() == minY) {
       direction = new Vector2(direction.x(), direction.y() * -1); //Flip y
     }
 
-    if (position.y() == maxY) { //Bottom wall, you lose!
+    //Bottom wall, you lose!
+    if (position.y() == maxY) {
       System.out.println("Game over!");
       SuperDuperBreakout.instance.resetGame();
+      return;
+    }
+
+    //If it hit a brick
+    Brick brickCollision = bricks.isColliding(circle.getBoundsInParent());
+
+    if (brickCollision != null) {
+      brickCollision.onCollision();
+      direction = new Vector2(direction.x(), direction.y() * -1); //Flip y
       return;
     }
 

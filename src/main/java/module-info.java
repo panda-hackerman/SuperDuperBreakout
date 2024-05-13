@@ -1,6 +1,7 @@
 module gov.superswag.superduperbreakout {
   requires javafx.controls;
   requires javafx.fxml;
+  requires org.jetbrains.annotations;
 
   opens gov.superswag.superduperbreakout to javafx.fxml;
   exports gov.superswag.superduperbreakout;
