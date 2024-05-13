@@ -11,5 +11,7 @@ module gov.superswag.superduperbreakout {
   opens gov.superswag.superduperbreakout.util to javafx.fxml;
   exports gov.superswag.superduperbreakout.controller;
   opens gov.superswag.superduperbreakout.controller to javafx.fxml;
+  opens gov.superswag.superduperbreakout.leaderboard to javafx.fxml;
+  exports gov.superswag.superduperbreakout.leaderboard;
 
 }

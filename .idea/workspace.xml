@@ -5,13 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9fcb21b-fba3-42f8-b2f4-3a73eaeeee51" name="Changes" comment="Created the Universe">
+      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/leaderboard/Leaderboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/leaderboard/LeaderboardApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/leaderboard/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/SuperDuperBreakout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/controller/InputHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/controller/InputHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Ball.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/gameobjects/Paddle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/MathHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/MathHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gov/superswag/superduperbreakout/util/Vector2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JavaFXApplication" />
       </list>
     </option>
   </component>
@@ -52,12 +52,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.LeaderboardApp.executor": "Run",
     "Application.SuperDuperBreakout.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/khalidhankeer/Documents/GitHub/SuperDuperBreakout",
     "settings.editor.selected.configurable": "inlay.hints"
   }
 }]]></component>
@@ -79,7 +82,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
       </set>
     </attachedChunks>
   </component>
@@ -93,6 +96,17 @@
       <updated>1714144910197</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
