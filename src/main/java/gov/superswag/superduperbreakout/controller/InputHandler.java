@@ -16,26 +16,31 @@ public class InputHandler {
   public static final Collection<KeyCode> movementKeysL = List.of(KeyCode.LEFT, KeyCode.A);
   public static final Collection<KeyCode> movementKeysR = List.of(KeyCode.RIGHT, KeyCode.D);
 
-  public static void keyPressed(KeyEvent e) {
+  /** When a key is pressed */
+  public static void onKeyPressed(KeyEvent e) {
     KeyCode code = e.getCode();
     if (!pressedInput.contains(code)) {
       pressedInput.add(code);
     }
   }
 
-  public static void keyReleased(KeyEvent e) {
+  /** When a key is released */
+  public static void onKeyReleased(KeyEvent e) {
     KeyCode code = e.getCode();
     pressedInput.remove(code);
   }
 
+  /** True if a given key is pressed*/
   public static boolean isPressed(KeyCode code) {
     return pressedInput.contains(code);
   }
 
+  /** If any of the "left" input keys are pressed */
   public static boolean leftPressed() {
     return pressedInput.stream().anyMatch(movementKeysL::contains);
   }
 
+  /** If any of the "right" input keys are pressed */
   public static boolean rightPressed() {
     return pressedInput.stream().anyMatch(movementKeysR::contains);
   }

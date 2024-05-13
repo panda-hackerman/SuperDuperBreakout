@@ -24,9 +24,10 @@ public class Paddle {
   final double minX = 0;
   final double maxX = SuperDuperBreakout.GAMEPLAY_WINDOW_WIDTH - PADDLE_WIDTH;
 
-  Vector2 position;
-
+  private final AnimationTimer animationTimer;
   private final Rectangle rect;
+
+  Vector2 position;
   private long lastUpdateTime = 0;
 
   public Paddle(double x, double y) {
@@ -37,7 +38,7 @@ public class Paddle {
     position = new Vector2(x, y);
 
     //Start the update loop
-    AnimationTimer animationTimer = new AnimationTimer() {
+    animationTimer = new AnimationTimer() {
       @Override
       public void handle(long currentTime) {
         onAnimUpdate(currentTime);
@@ -50,7 +51,11 @@ public class Paddle {
     return rect;
   }
 
-  public void onAnimUpdate(long now) {
+  public void stop() {
+    animationTimer.stop();
+  }
+
+  private void onAnimUpdate(long now) {
 
     if (lastUpdateTime == 0) {
       lastUpdateTime = now;
@@ -66,9 +71,10 @@ public class Paddle {
 
   /**
    * Get velocity based on the input direction.
+   *
    * @see InputHandler
    */
-  public double getVelocity() {
+  private double getVelocity() {
     InputDirection input = InputHandler.getInputDirection();
     return switch (input) {
       case LEFT -> -SPEED;
@@ -77,7 +83,12 @@ public class Paddle {
     };
   }
 
-  public void moveHorizontal(double moveX) {
+  /**
+   * Move a certain amount in the horizontal direction
+   *
+   * @param moveX The amount of pixels to move
+   */
+  private void moveHorizontal(double moveX) {
 
     //Add movement to current position, and clamp to bounds.
     double newX = MathHelper.clamp(position.x() + moveX, minX, maxX);

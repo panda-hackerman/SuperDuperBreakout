@@ -18,6 +18,7 @@ public class Ball {
   public static final double maxX = SuperDuperBreakout.GAMEPLAY_WINDOW_WIDTH - RADIUS;
   public static final double maxY = SuperDuperBreakout.GAMEPLAY_WINDOW_HEIGHT - RADIUS;
 
+  private final AnimationTimer animationTimer;
   private final Circle circle;
 
   private Vector2 position;
@@ -36,7 +37,7 @@ public class Ball {
     position = new Vector2(x, y);
 
     //Start the update loop
-    AnimationTimer animationTimer = new AnimationTimer() {
+    animationTimer = new AnimationTimer() {
       @Override
       public void handle(long currentTime) {
         onAnimUpdate(currentTime);
@@ -49,7 +50,11 @@ public class Ball {
     return circle;
   }
 
-  public void onAnimUpdate(long now) {
+  public void stop() {
+    animationTimer.stop();
+  }
+
+  private void onAnimUpdate(long now) {
 
     if (lastUpdateTime == 0) {
       lastUpdateTime = now;
@@ -64,7 +69,7 @@ public class Ball {
     lastUpdateTime = now;
   }
 
-  public void move(Vector2 direction) {
+  private void move(Vector2 direction) {
 
     double x = position.x() + direction.x();
     double y = position.y() + direction.y();
@@ -78,20 +83,22 @@ public class Ball {
 
   }
 
-  public void checkCollision() {
+  private void checkCollision() {
 
     //If it hit the wall
-    if (position.x() == minX || position.x() == maxX) {
+    if (position.x() == minX || position.x() == maxX) { //L and R
       direction = new Vector2(direction.x() * -1, direction.y()); //Flip x
-      System.out.println("Direction: " + direction + ", angle:" + Math.toDegrees(direction.angle()));
     }
 
-    if (position.y() == minY || position.y() == maxY) {
+    if (position.y() == minY) { // Top wall
       direction = new Vector2(direction.x(), direction.y() * -1); //Flip y
-      System.out.println("Direction: " + direction + ", angle:" + Math.toDegrees(direction.angle()));
     }
 
-    //TODO: Lose if hit the bottom wall
+    if (position.y() == maxY) { //Bottom wall, you lose!
+      System.out.println("Game over!");
+      SuperDuperBreakout.instance.resetGame();
+      return;
+    }
 
     //If it hit the paddle
     double paddleX = paddle.position.x();
@@ -112,10 +119,8 @@ public class Ball {
       //Calculate the normal of the paddle.
       Vector2 normal = calculateCollisionNormal(paddleX);
 
+      //Calculate the direction
       direction = MathHelper.calculateReflectionVector(direction, normal);
-
-      System.out.println("Direction: " + direction + ", angle:" + Math.toDegrees(direction.angle()));
-
     }
 
   }
