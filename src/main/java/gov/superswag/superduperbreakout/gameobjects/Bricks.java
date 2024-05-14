@@ -2,11 +2,11 @@ package gov.superswag.superduperbreakout.gameobjects;
 
 import static gov.superswag.superduperbreakout.SuperDuperBreakout.GAMEPLAY_WINDOW_WIDTH;
 
-import gov.superswag.superduperbreakout.util.Vector2;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,10 +14,11 @@ public class Bricks {
 
   public static final int ROWS = 8;
   public static final int COLUMNS = 8;
+  public static final Paint[] paint = new Paint[ROWS];
 
   public static final int HGAP = 3;
   public static final int VGAP = 3;
-  public static final int TOP_PADDING = 20;
+  public static final int TOP_PADDING = 40;
 
   public static final int BRICK_HEIGHT = 5;
   public static final int BRICK_WIDTH = (int) (GAMEPLAY_WINDOW_WIDTH / (COLUMNS + 1));
@@ -46,8 +47,6 @@ public class Bricks {
     double bricksSpaceTotal = (COLUMNS * BRICK_WIDTH) + (HGAP * (COLUMNS - 1));
     double remaining = (int) (GAMEPLAY_WINDOW_WIDTH - bricksSpaceTotal);
 
-    System.out.println(remaining);
-
     pane.setPadding(new Insets(TOP_PADDING, remaining / 2, 0,remaining / 2));
   }
 
@@ -74,7 +73,7 @@ public class Bricks {
   }
 
   /** A single brick */
-  static class Brick {
+  public static class Brick {
 
     public final int col;
     public final int row;

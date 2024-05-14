@@ -11,7 +11,9 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -22,16 +24,18 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/** Main gameplay class */
 public class SuperDuperBreakout extends Application {
 
   public static final double GAMEPLAY_WINDOW_WIDTH = 300;
   public static final double GAMEPLAY_WINDOW_HEIGHT = 500;
 
   public static SuperDuperBreakout instance;
+  private static Leaderboard leaderboard;
 
   Pane mainPane;
   Stage mainStage;
-  Scene mainGameplayScene, startScene;
+  Scene mainGameplayScene, startScene, endGameScene;
 
   public Paddle paddle;
   public Ball ball;
@@ -39,15 +43,18 @@ public class SuperDuperBreakout extends Application {
   public Text scoreText;
 
   private int score;
-  private Leaderboard leaderboard;
+  private String playerName;
 
   @Override
   public void start(Stage primaryStage) throws IOException {
     instance = this;
     mainStage = primaryStage;
-    leaderboard = new Leaderboard();
-
     startScene = buildStartScene();
+
+    if (leaderboard == null) { //Keep it, if it already exists.
+      leaderboard = new Leaderboard();
+      System.out.println("New leaderboard");
+    }
 
     primaryStage.setTitle("Super Super Breakout");
     primaryStage.setScene(startScene);
@@ -55,29 +62,48 @@ public class SuperDuperBreakout extends Application {
     primaryStage.show();
   }
 
+  /** Transition to gameplay */
+  public void startGame() {
+    score = 0;
+    mainGameplayScene = buildGameplayScene();
+    mainStage.setScene(mainGameplayScene);
+    mainGameplayScene.setOnKeyPressed(InputHandler.keyPressedHandler);
+    mainGameplayScene.setOnKeyReleased(InputHandler.keyReleasedHandler);
+  }
+
+  /** Transition from gameplay to end screen */
+  public void endGame() {
+
+    ball.stop();
+    paddle.stop();
+    mainGameplayScene.removeEventHandler(KeyEvent.KEY_PRESSED, InputHandler.keyPressedHandler);
+    mainGameplayScene.removeEventHandler(KeyEvent.KEY_RELEASED, InputHandler.keyReleasedHandler);
+
+    leaderboard.addScore(playerName, score);
+
+    endGameScene = showEndGameScreen();
+    mainStage.setScene(endGameScene);
+  }
+
   private Scene buildStartScene() {
 
     VBox root = new VBox(10);
+
     root.setAlignment(Pos.CENTER);
     root.setStyle("-fx-padding: 20; -fx-background-color: black;");
 
     TextField nameInput = new TextField();
-    nameInput.setPromptText("Enter your name");
     Button playButton = new Button("Play");
 
+    nameInput.setPromptText("Enter your name");
+
+    //Try to play the game, if name is valid
     playButton.setOnAction(e -> {
-      String playerName = nameInput.getText().trim();
+
+      playerName = nameInput.getText().trim();
+
       if (!playerName.isEmpty()) {
-        try {
-          mainGameplayScene = buildGameplayScene();
-          mainStage.setScene(mainGameplayScene);
-          mainGameplayScene.setOnKeyPressed(InputHandler::onKeyPressed);
-          mainGameplayScene.setOnKeyReleased(InputHandler::onKeyReleased);
-        } catch (Exception ex) {
-          System.out.println("Failed to initialize gameplay scene: " + ex.getMessage());
-        }
-      } else {
-        nameInput.setPromptText("Please enter a name!");
+        startGame();
       }
     });
 
@@ -123,12 +149,42 @@ public class SuperDuperBreakout extends Application {
     return new Scene(mainPane, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
   }
 
-  /** Every time the player scores a point */
+  public Scene showEndGameScreen() {
+
+    // Display  leaderboard
+    String leaderboardText = leaderboard.getFormattedLeaderboard();
+    Label leaderboardLabel = new Label(leaderboardText);
+    leaderboardLabel.setTextFill(Color.web("#89CFF0"));
+    leaderboardLabel.setFont(new Font("Arial", 18));
+
+    // Play Again button
+    Button playAgainButton = new Button("Play Again");
+    playAgainButton.setFont(new Font("Arial", 16));
+    playAgainButton.setStyle("-fx-background-color: #27AE60; -fx-text-fill: #FDFEFE;");
+
+    playAgainButton.setOnAction(e -> startGame());
+
+    // Main Menu button
+    Button mainMenuButton = new Button("Main Menu");
+    mainMenuButton.setFont(new Font("Arial", 16));
+    mainMenuButton.setStyle("-fx-background-color: #5499C7; -fx-text-fill: #FDFEFE;");
+
+    mainMenuButton.setOnAction(e -> resetGame());
+
+    // Layout configuration
+    VBox layout = new VBox(20);
+    layout.setAlignment(Pos.CENTER);
+    layout.getChildren().addAll(leaderboardLabel, playAgainButton, mainMenuButton);
+
+    return new Scene(layout, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
+  }
+
+  /**
+   * Every time the player scores a point
+   */
   public void scorePoint() {
     score++;
     scoreText.setText("Score: " + score);
-
-    //leaderboard.addScore("PlayerName", score); // Adjust to use actual player name from input
   }
 
   public static void main(String[] args) {
@@ -137,11 +193,13 @@ public class SuperDuperBreakout extends Application {
 
   public void resetGame() {
     System.out.println("Resetting game...");
+
     ball.stop();
     paddle.stop();
     mainPane.getChildren().removeAll(ball.getCircle(), paddle.getRect());
     mainStage.close();
 
+    //Quick and dirty... Might cause a memory leak (oops)
     Platform.runLater(() -> {
       try {
         new SuperDuperBreakout().start(new Stage());

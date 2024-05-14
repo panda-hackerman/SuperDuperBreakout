@@ -3,6 +3,7 @@ package gov.superswag.superduperbreakout.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -15,6 +16,9 @@ public class InputHandler {
 
   public static final Collection<KeyCode> movementKeysL = List.of(KeyCode.LEFT, KeyCode.A);
   public static final Collection<KeyCode> movementKeysR = List.of(KeyCode.RIGHT, KeyCode.D);
+
+  public static EventHandler<KeyEvent> keyPressedHandler = InputHandler::onKeyPressed;
+  public static EventHandler<KeyEvent> keyReleasedHandler = InputHandler::onKeyReleased;
 
   /** When a key is pressed */
   public static void onKeyPressed(KeyEvent e) {

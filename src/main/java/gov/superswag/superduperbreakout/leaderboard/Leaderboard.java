@@ -1,31 +1,56 @@
 package gov.superswag.superduperbreakout.leaderboard;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
+/**
+ * Stores the top scores.
+ *
+ * @author Khalid Hankeer
+ */
 public class Leaderboard {
-    private PriorityQueue<Player> topPlayers;
-    private final int maxSize = 5;
 
-    public Leaderboard() {
-        // Initialize the priority queue with a custom comparator that treats higher scores as higher priority
-        topPlayers = new PriorityQueue<>(maxSize, (a, b) -> Integer.compare(a.getScore(), b.getScore()));
+  private static final int MAX_ENTRIES = 5;
+  private final PriorityQueue<ScoreEntry> topScores;
+
+  public Leaderboard() {
+    this.topScores = new PriorityQueue<>(MAX_ENTRIES);
+  }
+
+  public void addScore(String playerName, int score) {
+
+    if (topScores.size() < MAX_ENTRIES) { //There are slots left, so just add it
+      topScores.add(new ScoreEntry(playerName, score));
+    } else if (score > topScores.peek().score()) { //No slots left, so must be a high score
+      topScores.poll();
+      topScores.add(new ScoreEntry(playerName, score));
     }
 
-    public void addScore(String name, int score) {
-        Player newPlayer = new Player(name, score);
-        if (topPlayers.size() < maxSize) {
-            topPlayers.add(newPlayer);
-        } else if (score > topPlayers.peek().getScore()) {
-            topPlayers.poll();  // Remove the player with the lowest score
-            topPlayers.add(newPlayer);
-        }
+  }
+
+  public String getFormattedLeaderboard() {
+
+    List<ScoreEntry> scores = new ArrayList<>(topScores);
+    Collections.sort(scores);
+    Collections.reverse(scores); //Highest to lowest
+
+    StringBuilder strBuilder = new StringBuilder("Top Scores:\n");
+
+    for (ScoreEntry entry : scores) {
+      String str = entry.playerName() + ": " + entry.score() + "\n";
+      strBuilder.append(str);
     }
 
-    public ObservableList<Player> getTopPlayers() {
-        ObservableList<Player> players = FXCollections.observableArrayList(topPlayers);
-        FXCollections.sort(players, (a, b) -> Integer.compare(b.getScore(), a.getScore()));  // Sort descending for display
-        return players;
+    return strBuilder.toString();
+  }
+
+  public record ScoreEntry(String playerName, int score) implements Comparable<ScoreEntry> {
+    @Override
+    public int compareTo(ScoreEntry other) {
+      return Integer.compare(this.score, other.score);
     }
+  }
 }

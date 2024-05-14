@@ -101,7 +101,7 @@ public class Ball {
     //Bottom wall, you lose!
     if (position.y() == maxY) {
       System.out.println("Game over!");
-      SuperDuperBreakout.instance.resetGame();
+      SuperDuperBreakout.instance.endGame();
       return;
     }
 
