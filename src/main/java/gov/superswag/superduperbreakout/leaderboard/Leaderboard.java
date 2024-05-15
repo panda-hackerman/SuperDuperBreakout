@@ -1,5 +1,6 @@
 package gov.superswag.superduperbreakout.leaderboard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,7 +12,7 @@ import java.util.PriorityQueue;
  *
  * @author Khalid Hankeer
  */
-public class Leaderboard {
+public class Leaderboard implements Serializable {
 
   private static final int MAX_ENTRIES = 5;
   private final PriorityQueue<ScoreEntry> topScores;

@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
@@ -31,7 +32,7 @@ public class SuperDuperBreakout extends Application {
   public static final double GAMEPLAY_WINDOW_HEIGHT = 500;
 
   public static SuperDuperBreakout instance;
-  private static Leaderboard leaderboard;
+  private static Leaderboard leaderboard; //Singleton
 
   Pane mainPane;
   Stage mainStage;
@@ -47,13 +48,13 @@ public class SuperDuperBreakout extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
+
     instance = this;
     mainStage = primaryStage;
     startScene = buildStartScene();
 
     if (leaderboard == null) { //Keep it, if it already exists.
       leaderboard = new Leaderboard();
-      System.out.println("New leaderboard");
     }
 
     primaryStage.setTitle("Super Super Breakout");
@@ -62,11 +63,19 @@ public class SuperDuperBreakout extends Application {
     primaryStage.show();
   }
 
+  public static void main(String[] args) {
+    launch(args);
+  }
+
   /** Transition to gameplay */
   public void startGame() {
+
     score = 0;
+
     mainGameplayScene = buildGameplayScene();
     mainStage.setScene(mainGameplayScene);
+
+    InputHandler.clear();
     mainGameplayScene.setOnKeyPressed(InputHandler.keyPressedHandler);
     mainGameplayScene.setOnKeyReleased(InputHandler.keyReleasedHandler);
   }
@@ -76,13 +85,36 @@ public class SuperDuperBreakout extends Application {
 
     ball.stop();
     paddle.stop();
+
     mainGameplayScene.removeEventHandler(KeyEvent.KEY_PRESSED, InputHandler.keyPressedHandler);
     mainGameplayScene.removeEventHandler(KeyEvent.KEY_RELEASED, InputHandler.keyReleasedHandler);
 
     leaderboard.addScore(playerName, score);
 
-    endGameScene = showEndGameScreen();
+    endGameScene = buildEndScreen();
     mainStage.setScene(endGameScene);
+  }
+
+  /** Resets the game (to the start screen) and all variables. This method creates a new
+   * {@link SuperDuperBreakout} class, and the current one should be discarded */
+  public void resetGame() {
+
+    System.out.println("Resetting game...");
+
+    ball.stop();
+    paddle.stop();
+    mainPane.getChildren().removeAll(ball.getCircle(), paddle.getRect());
+    mainStage.close();
+
+    //Quick and dirty... Might cause a memory leak (oops)
+    Platform.runLater(() -> {
+      try {
+        new SuperDuperBreakout().start(new Stage());
+      } catch (IOException e) {
+        System.out.println("Couldn't reset scene: " + e.getMessage());
+      }
+    });
+
   }
 
   private Scene buildStartScene() {
@@ -96,14 +128,18 @@ public class SuperDuperBreakout extends Application {
     Button playButton = new Button("Play");
 
     nameInput.setPromptText("Enter your name");
-
-    //Try to play the game, if name is valid
     playButton.setOnAction(e -> {
-
       playerName = nameInput.getText().trim();
 
       if (!playerName.isEmpty()) {
         startGame();
+      }
+    });
+
+    //Press the button when enter is pressed
+    nameInput.setOnKeyPressed(e -> {
+      if (e.getCode() == KeyCode.ENTER) {
+        playButton.fire();
       }
     });
 
@@ -141,7 +177,7 @@ public class SuperDuperBreakout extends Application {
 
     //Ball
     double ballX = GAMEPLAY_WINDOW_WIDTH / 2f;
-    double ballY = GAMEPLAY_WINDOW_HEIGHT / 2f;
+    double ballY = GAMEPLAY_WINDOW_HEIGHT / 2.5f;
 
     ball = new Ball(ballX, ballY);
     mainPane.getChildren().add(ball.getCircle());
@@ -149,9 +185,9 @@ public class SuperDuperBreakout extends Application {
     return new Scene(mainPane, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
   }
 
-  public Scene showEndGameScreen() {
+  public Scene buildEndScreen() {
 
-    // Display  leaderboard
+    // Display leaderboard
     String leaderboardText = leaderboard.getFormattedLeaderboard();
     Label leaderboardLabel = new Label(leaderboardText);
     leaderboardLabel.setTextFill(Color.web("#89CFF0"));
@@ -179,34 +215,9 @@ public class SuperDuperBreakout extends Application {
     return new Scene(layout, GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT);
   }
 
-  /**
-   * Every time the player scores a point
-   */
+  /** Every time the player scores a point */
   public void scorePoint() {
     score++;
     scoreText.setText("Score: " + score);
-  }
-
-  public static void main(String[] args) {
-    launch(args);
-  }
-
-  public void resetGame() {
-    System.out.println("Resetting game...");
-
-    ball.stop();
-    paddle.stop();
-    mainPane.getChildren().removeAll(ball.getCircle(), paddle.getRect());
-    mainStage.close();
-
-    //Quick and dirty... Might cause a memory leak (oops)
-    Platform.runLater(() -> {
-      try {
-        new SuperDuperBreakout().start(new Stage());
-      } catch (IOException e) {
-        System.out.println("Couldn't reset scene: " + e.getMessage());
-      }
-    });
-
   }
 }

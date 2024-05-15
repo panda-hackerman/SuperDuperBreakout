@@ -2,6 +2,7 @@ package gov.superswag.superduperbreakout.gameobjects;
 
 import static gov.superswag.superduperbreakout.SuperDuperBreakout.GAMEPLAY_WINDOW_WIDTH;
 
+import gov.superswag.superduperbreakout.util.CollisionInformation;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
@@ -29,9 +30,7 @@ public class Bricks {
 
   public Bricks() {
 
-    //Initialize
     pane = new GridPane(HGAP, VGAP);
-
     this.bricks = new Brick[COLUMNS][ROWS];
 
     for (int i = 0; i < COLUMNS; i++) {
@@ -44,6 +43,7 @@ public class Bricks {
       }
     }
 
+
     double bricksSpaceTotal = (COLUMNS * BRICK_WIDTH) + (HGAP * (COLUMNS - 1));
     double remaining = (int) (GAMEPLAY_WINDOW_WIDTH - bricksSpaceTotal);
 
@@ -51,15 +51,17 @@ public class Bricks {
   }
 
   /** Returns the brick this bounding box collides with, or null if no collision is occurring. */
-  public @Nullable Brick isColliding(Bounds other) {
+  public @Nullable CollisionInformation getCollision(Bounds other) {
 
     for (int i = 0; i < COLUMNS; i++) {
       for (int j = 0; j < ROWS; j++) {
 
         Brick brick = bricks[i][j];
+        Bounds hitbox = brick.rect.getBoundsInParent();
 
-        if (brick.visible && brick.rect.getBoundsInParent().intersects(other)) {
-          return brick;
+        if (brick.visible && hitbox.intersects(other)) {
+          brick.onCollision();
+          return new CollisionInformation(hitbox, other);
         }
 
       }
@@ -89,18 +91,9 @@ public class Bricks {
       GridPane.setFillWidth(rect, true);
     }
 
-    public void setVisible() {
-      this.visible = true;
-      rect.setFill(Color.WHITE);
-    }
-
-    public void setInvisible() {
+    public void onCollision() {
       this.visible = false;
       rect.setFill(Color.TRANSPARENT);
-    }
-
-    public void onCollision() {
-      setInvisible();
     }
   }
 

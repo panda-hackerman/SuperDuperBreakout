@@ -20,6 +20,12 @@ public class InputHandler {
   public static EventHandler<KeyEvent> keyPressedHandler = InputHandler::onKeyPressed;
   public static EventHandler<KeyEvent> keyReleasedHandler = InputHandler::onKeyReleased;
 
+  /** Clears all current inputs (if a key is currently pressed, it won't be registered until it is
+   * released and pressed again */
+  public static void clear() {
+    pressedInput.clear();
+  }
+
   /** When a key is pressed */
   public static void onKeyPressed(KeyEvent e) {
     KeyCode code = e.getCode();

@@ -25,6 +25,14 @@ public record Vector2(double x, double y) {
     return new Vector2(this.x, y);
   }
 
+  public Vector2 flipX() {
+    return setX(-x);
+  }
+
+  public Vector2 flipY() {
+    return setY(-y);
+  }
+
   /** Returns a Vector2 with the specified angle (in radians) and radius/ length. */
   public static Vector2 fromAngle(double radians, double radius) {
     double x = radius * Math.cos(radians);
@@ -39,6 +47,17 @@ public record Vector2(double x, double y) {
   public Vector2 plus(Vector2 other) {
     double x = this.x + other.x;
     double y = this.y + other.y;
+
+    return new Vector2(x, y);
+  }
+
+  /**
+   * Subtracts each element (x, y) from a given vector to this vector. For example, if the vector
+   * (5, 10) is subtracted from (10, -3), the result will be (5, -13)
+   */
+  public Vector2 minus(Vector2 other) {
+    double x = this.x - other.x;
+    double y = this.y - other.y;
 
     return new Vector2(x, y);
   }

@@ -2,9 +2,12 @@ package gov.superswag.superduperbreakout.gameobjects;
 
 import gov.superswag.superduperbreakout.SuperDuperBreakout;
 import gov.superswag.superduperbreakout.gameobjects.Bricks.Brick;
+import gov.superswag.superduperbreakout.util.CollisionInformation;
+import gov.superswag.superduperbreakout.util.CollisionInformation.CollisionSide;
 import gov.superswag.superduperbreakout.util.MathHelper;
 import gov.superswag.superduperbreakout.util.Vector2;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Bounds;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -88,34 +91,47 @@ public class Ball {
 
   private void checkCollision() {
 
-    //If it hit the side wall
+    //SIDE WALL
     if (position.x() == minX || position.x() == maxX) { //L and R
-      direction = new Vector2(direction.x() * -1, direction.y()); //Flip x
+      direction = direction.flipX();
     }
 
-    //Top Wall
+    //TOP WALL
     if (position.y() == minY) {
-      direction = new Vector2(direction.x(), direction.y() * -1); //Flip y
+      direction = direction.flipY();
     }
 
-    //Bottom wall, you lose!
+    //BOTTOM WALL (you lose!)
     if (position.y() == maxY) {
       System.out.println("Game over!");
       SuperDuperBreakout.instance.endGame();
       return;
     }
 
-    //If it hit a brick
-    Brick brickCollision = bricks.isColliding(circle.getBoundsInParent());
+    //A BRICK
+    Bounds ballHitbox = circle.getBoundsInParent();
+    CollisionInformation brickCollision = bricks.getCollision(ballHitbox);
 
     if (brickCollision != null) {
-      brickCollision.onCollision();
-      direction = new Vector2(direction.x(), direction.y() * -1); //Flip y
+
+      //Switch based on where it hit
+      direction = switch (brickCollision.collisionSide()) {
+        case LEFT, RIGHT -> direction.flipX();
+        case TOP, BOTTOM -> direction.flipY();
+        case UNKNOWN -> {
+          System.out.println("UNKNOWN DIRECTION... Flip y by default");
+          yield direction.flipY();
+        }
+      };
+
+      System.out.println(brickCollision.collisionSide());
+
       SuperDuperBreakout.instance.scorePoint();
-      return;
+
+      return; //Can't hit a brick & the paddle on the same frame (unless something is very wrong!)
     }
 
-    //If it hit the paddle
+    //PADDLE
     double paddleX = paddle.position.x();
     double paddleY = paddle.position.y();
 
