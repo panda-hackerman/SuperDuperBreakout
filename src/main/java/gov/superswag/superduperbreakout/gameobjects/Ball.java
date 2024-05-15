@@ -12,8 +12,8 @@ import javafx.scene.shape.Circle;
 public class Ball {
 
   /** (In pixels per second) */
-  public static final double SPEED = 250.0;
-  public static final double RADIUS = 5.0;
+  public static final double SPEED = 300;
+  public static final double RADIUS = 4.0;
 
   public static final double minX = 0 + RADIUS;
   public static final double minY = 0 + RADIUS;
@@ -53,7 +53,8 @@ public class Ball {
     return circle;
   }
 
-  public void stop() {
+  /** Delegate method to stop the animation timer. Prevents the update loop from running*/
+  public void stopUpdateLoop() {
     animationTimer.stop();
   }
 

@@ -15,6 +15,7 @@ public class BrickGrid {
 
   public static final int ROWS = 12;
   public static final int COLUMNS = 8;
+
   public static final int H_GAP = 3;
   public static final int V_GAP = 3;
   public static final int TOP_PADDING = 40;
@@ -24,11 +25,11 @@ public class BrickGrid {
   /** From top to bottom, the colors the bricks are (and how many points they are worth). Try to
    *  keep rows divisible by this list's index (it doesn't have to be, just looks better) */
   public static final List<BrickLevel> BRICK_LEVELS = List.of(
-      new BrickLevel(Color.RED, 4),
-      new BrickLevel(Color.ORANGE, 3),
-      new BrickLevel(Color.YELLOW, 2),
-      new BrickLevel(Color.GREEN, 2),
-      new BrickLevel(Color.BLUE, 1),
+      new BrickLevel(Color.RED, 10),
+      new BrickLevel(Color.ORANGE, 5),
+      new BrickLevel(Color.YELLOW, 4),
+      new BrickLevel(Color.GREEN, 3),
+      new BrickLevel(Color.BLUE, 2),
       new BrickLevel(Color.PURPLE,1));
 
   private final Brick[][] bricks;

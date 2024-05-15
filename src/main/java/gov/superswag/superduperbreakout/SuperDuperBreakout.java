@@ -83,8 +83,8 @@ public class SuperDuperBreakout extends Application {
   /** Transition from gameplay to end screen */
   public void endGame() {
 
-    ball.stop();
-    paddle.stop();
+    ball.stopUpdateLoop();
+    paddle.stopUpdateLoop();
 
     mainGameplayScene.removeEventHandler(KeyEvent.KEY_PRESSED, InputHandler.keyPressedHandler);
     mainGameplayScene.removeEventHandler(KeyEvent.KEY_RELEASED, InputHandler.keyReleasedHandler);
@@ -101,8 +101,8 @@ public class SuperDuperBreakout extends Application {
 
     System.out.println("Resetting game...");
 
-    ball.stop();
-    paddle.stop();
+    ball.stopUpdateLoop();
+    paddle.stopUpdateLoop();
     mainPane.getChildren().removeAll(ball.getCircle(), paddle.getRect());
     mainStage.close();
 

@@ -14,10 +14,10 @@ import javafx.scene.shape.Shape;
 public class Paddle {
 
   /** (In pixels per second) */
-  public static final double SPEED = 200;
+  public static final double SPEED = 300;
 
-  public static final int PADDLE_WIDTH = 75;
-  public static final int PADDLE_HEIGHT = 10;
+  public static final double PADDLE_WIDTH = 70;
+  public static final double PADDLE_HEIGHT = 7.5f;
   /** The paddle's distance from the bottom */
   public static final int PADDLE_Y = 75;
 
@@ -33,7 +33,7 @@ public class Paddle {
   public Paddle(double x, double y) {
 
     rect = new Rectangle(x, y, PADDLE_WIDTH, PADDLE_HEIGHT);
-    rect.setFill(Color.WHITE);
+    rect.setFill(Color.LIGHTBLUE);
 
     position = new Vector2(x, y);
 
@@ -51,7 +51,8 @@ public class Paddle {
     return rect;
   }
 
-  public void stop() {
+  /** Delegate method to stop the animation timer. Prevents the update loop from running*/
+  public void stopUpdateLoop() {
     animationTimer.stop();
   }
 
