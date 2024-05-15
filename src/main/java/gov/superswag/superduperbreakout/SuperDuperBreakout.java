@@ -2,7 +2,7 @@ package gov.superswag.superduperbreakout;
 
 import gov.superswag.superduperbreakout.controller.InputHandler;
 import gov.superswag.superduperbreakout.gameobjects.Ball;
-import gov.superswag.superduperbreakout.gameobjects.Bricks;
+import gov.superswag.superduperbreakout.gameobjects.BrickGrid;
 import gov.superswag.superduperbreakout.gameobjects.Paddle;
 import gov.superswag.superduperbreakout.leaderboard.Leaderboard;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class SuperDuperBreakout extends Application {
 
   public Paddle paddle;
   public Ball ball;
-  public Bricks bricks;
+  public BrickGrid bricks;
   public Text scoreText;
 
   private int score;
@@ -158,7 +158,7 @@ public class SuperDuperBreakout extends Application {
     mainPane.getChildren().add(scoreText);
 
     //Bricks
-    bricks = new Bricks();
+    bricks = new BrickGrid();
 
     StackPane stackPane = new StackPane();
     stackPane.setPrefSize(GAMEPLAY_WINDOW_WIDTH, GAMEPLAY_WINDOW_HEIGHT / 3);
@@ -216,8 +216,8 @@ public class SuperDuperBreakout extends Application {
   }
 
   /** Every time the player scores a point */
-  public void scorePoint() {
-    score++;
+  public void scorePoint(int amount) {
+    score += amount;
     scoreText.setText("Score: " + score);
   }
 }

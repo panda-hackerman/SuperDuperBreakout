@@ -1,9 +1,7 @@
 package gov.superswag.superduperbreakout.gameobjects;
 
 import gov.superswag.superduperbreakout.SuperDuperBreakout;
-import gov.superswag.superduperbreakout.gameobjects.Bricks.Brick;
 import gov.superswag.superduperbreakout.util.CollisionInformation;
-import gov.superswag.superduperbreakout.util.CollisionInformation.CollisionSide;
 import gov.superswag.superduperbreakout.util.MathHelper;
 import gov.superswag.superduperbreakout.util.Vector2;
 import javafx.animation.AnimationTimer;
@@ -32,7 +30,7 @@ public class Ball {
   private long lastUpdateTime = 0;
 
   Paddle paddle = SuperDuperBreakout.instance.paddle;
-  Bricks bricks = SuperDuperBreakout.instance.bricks;
+  BrickGrid bricks = SuperDuperBreakout.instance.bricks;
 
   public Ball(double x, double y) {
 
@@ -123,10 +121,6 @@ public class Ball {
           yield direction.flipY();
         }
       };
-
-      System.out.println(brickCollision.collisionSide());
-
-      SuperDuperBreakout.instance.scorePoint();
 
       return; //Can't hit a brick & the paddle on the same frame (unless something is very wrong!)
     }
