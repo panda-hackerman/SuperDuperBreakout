@@ -5,6 +5,7 @@ import static gov.superswag.superduperbreakout.SuperDuperBreakout.GAMEPLAY_WINDO
 import gov.superswag.superduperbreakout.gameobjects.Brick.BrickLevel;
 import gov.superswag.superduperbreakout.util.CollisionInformation;
 import java.util.List;
+import java.util.stream.IntStream;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
@@ -32,9 +33,9 @@ public class BrickGrid {
       new BrickLevel(Color.BLUE, 2),
       new BrickLevel(Color.PURPLE,1));
 
-  private final Brick[][] bricks;
-
-  private final GridPane pane;
+  public static final int MAX_POINTS = IntStream.range(0, ROWS)
+      .map(i -> getLevel(i).numPoints() * COLUMNS)
+      .sum();
 
   public BrickGrid() {
 
@@ -57,8 +58,10 @@ public class BrickGrid {
 
     pane.setPadding(new Insets(TOP_PADDING, remaining / 2, 0,remaining / 2));
   }
+  private final Brick[][] bricks;
+  private final GridPane pane;
 
-  private BrickLevel getLevel(int row) {
+  private static BrickLevel getLevel(int row) {
 
     int index;
 

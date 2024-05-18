@@ -118,7 +118,7 @@ public class Ball {
         case LEFT, RIGHT -> direction.flipX();
         case TOP, BOTTOM -> direction.flipY();
         case UNKNOWN -> {
-          System.out.println("UNKNOWN DIRECTION... Flip y by default");
+          System.out.println("UNKNOWN DIRECTION... Flip y by default"); //TODO: what?
           yield direction.flipY();
         }
       };

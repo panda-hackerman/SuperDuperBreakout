@@ -219,5 +219,9 @@ public class SuperDuperBreakout extends Application {
   public void scorePoint(int amount) {
     score += amount;
     scoreText.setText("Score: " + score);
+
+    if (score >= BrickGrid.MAX_POINTS) {
+      endGame();
+    }
   }
 }
